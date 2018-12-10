@@ -18,6 +18,11 @@
   },
   "homepage": "https://github.com/irshad-logiciel/rest-api#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "router": "^1.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
   }
 }

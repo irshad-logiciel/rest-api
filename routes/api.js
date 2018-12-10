@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
 
 router.get('/', function (req, res) {
     res.send({
@@ -8,10 +9,11 @@ router.get('/', function (req, res) {
 });
 
 router.post('/po', function (req, res) {
+    var user = new User({ fname: req.body.fname });
+
+    user.save();
     res.send({
-        type: 'Post Method',
-        name: req.body.name,
-        l_name: req.body.l_name,
+        data: user,
     });
 });
 

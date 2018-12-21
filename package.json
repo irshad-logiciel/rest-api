@@ -1,0 +1,28 @@
+{
+  "name": "shop-restful-api",
+  "version": "1.0.0",
+  "description": "Create a shop restful api (build in node js)",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irshad-logiciel/rest-api.git"
+  },
+  "keywords": [
+    "shop-rest-api"
+  ],
+  "author": "Miar Siddique",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irshad-logiciel/rest-api/issues"
+  },
+  "homepage": "https://github.com/irshad-logiciel/rest-api#readme"
+}

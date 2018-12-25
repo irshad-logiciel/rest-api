@@ -5,10 +5,31 @@ const bodyParser = require('body-parser');
 
 const producstRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/'+process.env.dbName, { useNewUrlParser: true });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers', 
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    if(req.method === 'OPTIONS') {
+        res.header(
+            'Access-Contol-Allow-Methods',
+            'GET, PUT, PATCH, POST, DELETE'
+        );
+        return res.status(200).json({});
+    }
+    next();
+});
+
+
 // routes
 app.use('/products', producstRoutes);
 app.use('/orders', ordersRoutes);

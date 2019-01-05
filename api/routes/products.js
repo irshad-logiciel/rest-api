@@ -7,9 +7,24 @@ const mongoose = require('mongoose');
 route.get('/', (req, res, next) => {
     Product.find()
     .exec()
-    .then(doc => {
+    .then(docs => {
+        const response = {
+            count: docs.length,
+            products: docs.map(doc => {
+                console.log(doc);
+                return {
+                    id: doc._id,
+                    product_name: doc.name,
+                    product_price: doc.price,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/products/'+doc._id,
+                    }
+                }
+            })
+        }
         res.status(200).json({
-            data: doc,
+            data: response,
             status_code: 200,
         });
     })
@@ -34,13 +49,21 @@ route.post('/', (req, res, next) => {
         console.log(result);
         res.status(201).json({
             message: 'Post Methods',
-            data: result,
+            data: {
+                id: result._id,
+                name: result.name,
+                price: result.price,
+                reuest: {
+                    type: 'POST',
+                    url: 'http://localhost:3000/products/'+result._id
+                }
+            },
         });
     })
     .catch(err => {
         console.log(err);
         res.status(404).json({
-            message: 'Product not save',
+            error: err,
             status_code: 404
         });
     });
@@ -55,7 +78,15 @@ route.get('/:productId', (req, res, next) => {
         console.log(doc);
         if (doc) {
             res.status(200).json({
-                data: doc,
+                data: {
+                    id: doc._id,
+                    name: doc.name,
+                    price: doc.price,
+                    reuest: {
+                        type: 'POST',
+                        url: 'http://localhost:3000/products'
+                    }
+                },
                 status_code: 200,
             })
         } else {
@@ -84,7 +115,13 @@ route.patch('/:productId', (req, res, next) => {
     .exec()
     .then(result => {
         res.status(200).json({
-            data: result,
+            data: {
+                message: 'Updated successfully',
+                reuest: {
+                    type: 'PATCH',
+                    url: 'http://localhost:3000/products/' + id
+                }
+            },
             status_code: 200,
         });
     })
@@ -101,7 +138,7 @@ route.delete('/:productId', (req, res, next) => {
     .exec()
     .then(result => {
         res.status(200).json({
-            data: result,
+            data: 'deleted successfully',
             status_code:200,
         });
     })
